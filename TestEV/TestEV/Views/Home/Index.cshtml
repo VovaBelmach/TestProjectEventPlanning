@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div>
+        @if (User.IsInRole("admin"))
+        {
+            @Html.ActionLink("Create Event", "CreateEvent", "Home", new { @class = "btn btn-primary" })
+        }
+    </div>
+    
+    <div>
+        <h3>Мероприятия, в которые вы можете вступить:</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr style="background-color:darkgray">
+                    <th scope="col"><h4>Название мероприятия</h4></th>
+                    <th scope="col"><h4>Дата мероприятия</h4></th>
+                    <th scope="col"><h4>Время мероприятия</h4></th>
+                    <th scope="col"><h4>Количество свободных мест</h4></th>
+                    <th scope="col"><h4>Я учавствую</h4></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var b in ViewBag.Events)
+                {
+                <tr>
+                    <td class="col-lg">
+                        <h4>
+                            @b.Name
+                        </h4>
+                    </td>
+                    <td class="col-sm-1">
+                        <h4>
+                            @b.Date.ToShortDateString()
+                        </h4>
+                    </td>
+                    <td class="col-sm-1">
+                        <h4>
+                            @b.Time.ToShortTimeString()
+                        </h4>
+                    </td>
+                    <td class="col-sm-1">
+                        <h4>
+                            @b.NumberOfSeats
+                        </h4>
+                    </td>
+                    <td class="col-sm-1">
+                        <h4>
+                            @if (ViewBag.MyEventsIds.Contains(b.Id_event))
+                            {
+                                @Html.CheckBox("checkbox", true, new { @disabled = "disabled" });
+                            }
+                            else
+                            {
+                                @Html.CheckBox("checkbox", false, new { @disabled = "disabled" });
+                            }
+                        </h4>
+                    </td>
+                    <td class="col-sm-1">
+                        <h4>
+                            @Html.ActionLink("подробнее...", "CheckInfoAboutEvent", "Home", new { id = b.Id_event }, null)
+                        </h4>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+﻿@model TestEV.Models.Event
+
+@{
+
+    ViewBag.Title = "CheckInfoAboutEvent";
+}
+
+<h2>Информация об мероприятии</h2>
+
+
+@using (Html.BeginForm("JoinEvent", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+
+<div class="center-block" style="width:50%">
+    <hr />
+    <input type="hidden" name="id" value=" @Html.DisplayFor(model => model.Id_event)">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Theme)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Theme)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfSeats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfSeats)
+        </dd>
+
+    </dl>
+
+    @if (Model.NumberOfSeats == 0)
+    {
+        <div class="validation-summary-errors text-danger">
+            <ul>
+                <li>На данное мероприятие мест не осталось</li>
+            </ul>
+        </div>
+    }
+
+    @if (ViewBag.MyEvent)
+    {
+        <div class="validation-summary-errors text-danger">
+            <ul>
+                <li>Вы уже зарегистрированы на данное мероприятие</li>
+            </ul>
+        </div>
+    }
+
+    <div class="form-group">
+        <div class="col-md-2">
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-danger pull-left" })
+        </div>
+        @if (Model.NumberOfSeats != 0 && !ViewBag.MyEvent)
+        {
+            <div class="col-md-offset-4 col-md-2">
+                <input type="submit" value="Вступить" class="btn btn-success pull-right" />
+            </div>
+        }
+    </div>
+</div>
+}
